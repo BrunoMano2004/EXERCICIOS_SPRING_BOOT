@@ -1,22 +1,23 @@
 package br.com.alura.screenMatch.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DadosSerie {
+public class DadosEpisodeo {
 
     @JsonAlias("Title")
     private String titulo;
 
-    @JsonAlias({"TotalSeasons", "totalSeasons"})
-    private Integer totalTemporadas;
+    @JsonAlias("Episode")
+    private Integer numero;
 
     @JsonAlias("imdbRating")
     private String avaliacao;
 
     @JsonAlias("Released")
-    private String lancamento;
+    private String dataLancamento;
 
     public String getTitulo() {
         return titulo;
@@ -26,12 +27,12 @@ public class DadosSerie {
         this.titulo = titulo;
     }
 
-    public Integer getTotalTemporadas() {
-        return totalTemporadas;
+    public Integer getNumero() {
+        return numero;
     }
 
-    public void setTotalTemporadas(Integer totalTemporadas) {
-        this.totalTemporadas = totalTemporadas;
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 
     public String getAvaliacao() {
@@ -42,21 +43,21 @@ public class DadosSerie {
         this.avaliacao = avaliacao;
     }
 
-    public String getLancamento() {
-        return lancamento;
+    public String getDataLancamento() {
+        return dataLancamento;
     }
 
-    public void setLancamento(String lancamento) {
-        this.lancamento = lancamento;
+    public void setDataLancamento(String dataLancamento) {
+        this.dataLancamento = dataLancamento;
     }
 
     @Override
     public String toString() {
-        return "DadosSerie{" +
+        return "DadosEpisodeo{" +
                 "titulo='" + titulo + '\'' +
-                ", totalTemporadas=" + totalTemporadas +
+                ", numero=" + numero +
                 ", avaliacao='" + avaliacao + '\'' +
-                ", lancamento='" + lancamento + '\'' +
+                ", dataLancamento='" + dataLancamento + '\'' +
                 '}';
     }
 }
