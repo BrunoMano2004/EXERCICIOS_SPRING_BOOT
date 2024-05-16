@@ -8,7 +8,7 @@ import lombok.Setter;
 import med.voll.api.domain.enderecoModel.Endereco;
 import med.voll.api.domain.medicoModel.Medico;
 
-@Entity
+@Entity(name = "Paciente")
 @Getter
 @Setter
 @AllArgsConstructor
