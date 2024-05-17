@@ -1,13 +1,10 @@
 package med.voll.api.service;
 
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.ValidationException;
 import med.voll.api.domain.consultaModel.Consulta;
 import med.voll.api.domain.consultaModel.DadosAgendamentoConsulta;
 import med.voll.api.domain.consultaModel.DadosDetalhamentoConsulta;
-import med.voll.api.domain.consultaModel.validacoes.ValidadorAgendamentoDeConsulta;
+import med.voll.api.domain.consultaModel.validacoesConsulta.ValidadorAgendamentoDeConsulta;
 import med.voll.api.domain.medicoModel.Medico;
-import med.voll.api.domain.pacienteModel.DadosDetahamentoPaciente;
 import med.voll.api.infra.exception.ValidacaoException;
 import med.voll.api.repository.ConsultaRepository;
 import med.voll.api.repository.MedicoRepository;
