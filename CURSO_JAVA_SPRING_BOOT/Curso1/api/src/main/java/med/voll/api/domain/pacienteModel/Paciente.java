@@ -11,7 +11,6 @@ import med.voll.api.domain.medicoModel.Medico;
 @Entity(name = "Paciente")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Paciente {
 
@@ -31,6 +30,16 @@ public class Paciente {
     private Endereco endereco;
 
     private boolean ativo;
+
+    public Paciente(Long id, String nome, String email, String telefone, String cpf, Endereco endereco, boolean ativo) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.endereco = endereco;
+        this.ativo = ativo;
+    }
 
     public Paciente(DadosCadastroPaciente dados){
         this.nome = dados.nome();
