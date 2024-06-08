@@ -1,0 +1,47 @@
+package br.com.alura.adopet.api.controller;
+
+import br.com.alura.adopet.api.dto.adocao.AprovacaoAdocaoDTO;
+import br.com.alura.adopet.api.dto.adocao.ReprovacaoAdocaoDTO;
+import br.com.alura.adopet.api.dto.adocao.SolicitacaoAdocaoDTO;
+import br.com.alura.adopet.api.exception.ValidacaoException;
+import br.com.alura.adopet.api.service.AdocaoService;
+import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/adocoes")
+public class AdocaoController {
+
+    @Autowired
+    private AdocaoService adocaoService;
+
+    @PostMapping
+    @Transactional
+    public ResponseEntity<String> solicitar(@RequestBody @Valid SolicitacaoAdocaoDTO dto) throws MessagingException {
+        try {
+           this.adocaoService.solicitar(dto);
+            return ResponseEntity.ok().body("Adoção solicitada com sucesso!");
+        }catch (ValidacaoException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/aprovar")
+    @Transactional
+    public ResponseEntity<String> aprovar(@RequestBody @Valid AprovacaoAdocaoDTO dto) throws MessagingException {
+       this.adocaoService.aprovar(dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/reprovar")
+    @Transactional
+    public ResponseEntity<String> reprovar(@RequestBody @Valid ReprovacaoAdocaoDTO dto) throws MessagingException {
+        this.adocaoService.reprovar(dto);
+        return ResponseEntity.ok().build();
+    }
+
+}
