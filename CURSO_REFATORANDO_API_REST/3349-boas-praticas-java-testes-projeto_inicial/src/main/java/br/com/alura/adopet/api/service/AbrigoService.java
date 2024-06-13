@@ -41,7 +41,6 @@ public class AbrigoService {
     }
 
     public List<PetDto> listarPetsDoAbrigo(String idOuNome) {
-        System.out.println("oi");
         Abrigo abrigo = carregarAbrigo(idOuNome);
 
         return petRepository

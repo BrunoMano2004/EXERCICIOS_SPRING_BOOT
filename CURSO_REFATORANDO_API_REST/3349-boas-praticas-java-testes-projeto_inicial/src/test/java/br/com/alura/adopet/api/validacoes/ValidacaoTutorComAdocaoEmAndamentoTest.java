@@ -2,6 +2,7 @@ package br.com.alura.adopet.api.validacoes;
 
 import br.com.alura.adopet.api.dto.SolicitacaoAdocaoDto;
 import br.com.alura.adopet.api.exception.ValidacaoException;
+import br.com.alura.adopet.api.model.StatusAdocao;
 import br.com.alura.adopet.api.repository.AdocaoRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,28 +14,28 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ValidacaoTutorComLimiteDeAdocoesTest {
+class ValidacaoTutorComAdocaoEmAndamentoTest {
 
     @InjectMocks
-    private ValidacaoTutorComLimiteDeAdocoes validacao;
+    private ValidacaoTutorComAdocaoEmAndamento validacao;
 
     @Mock
     private AdocaoRepository adocaoRepository;
 
     @Test
-    void naoDeveriaCausarExcecaoDeValidacaoComTutorComMenosDe5Adocoes(){
+    void naoDeveriaCausarExcecaoDeValidacaoComTutorSemAdocaoEmAndamento(){
         SolicitacaoAdocaoDto dto = new SolicitacaoAdocaoDto(10L, 10L, "motivo qualquer");
-        when(adocaoRepository.numeroDeAdocoesFeitasPorUmTutorComStatusAprovado(dto.idTutor())).thenReturn(4);
+        when(adocaoRepository.existsByTutorIdAndStatus(dto.idTutor(), StatusAdocao.AGUARDANDO_AVALIACAO)).thenReturn(false);
 
         assertDoesNotThrow(() -> validacao.validar(dto));
     }
 
     @Test
-    void deveriaCausarExcecaoDeValidacaoComTutorComMaisDe5Adocoes(){
+    void deveriaCausarExcecaoDeValidacaoComTutorComAdocaoEmAndamento(){
         SolicitacaoAdocaoDto dto = new SolicitacaoAdocaoDto(10L, 10L, "motivo qualquer");
-        when(adocaoRepository.numeroDeAdocoesFeitasPorUmTutorComStatusAprovado(dto.idTutor())).thenReturn(5);
+        when(adocaoRepository.existsByTutorIdAndStatus(dto.idTutor(), StatusAdocao.AGUARDANDO_AVALIACAO)).thenReturn(true);
 
         ValidacaoException exception = assertThrows(ValidacaoException.class, () -> validacao.validar(dto));
-        assertEquals("Tutor chegou ao limite máximo de 5 adoções!", exception.getMessage());
+        assertEquals("Tutor já possui outra adoção aguardando avaliação!", exception.getMessage());
     }
 }

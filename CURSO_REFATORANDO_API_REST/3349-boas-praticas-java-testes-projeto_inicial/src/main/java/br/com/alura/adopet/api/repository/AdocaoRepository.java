@@ -12,4 +12,6 @@ public interface AdocaoRepository extends JpaRepository<Adocao, Long> {
     @Query("select count(a) from Adocao a where a.tutor.id = :idTutor and a.status = 'APROVADO'")
     int numeroDeAdocoesFeitasPorUmTutorComStatusAprovado(Long idTutor);
 
+    boolean existsByTutorIdAndStatus(Long idTutor, StatusAdocao status);
+
 }
